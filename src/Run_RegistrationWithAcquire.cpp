@@ -4,23 +4,25 @@
 #include "../include/MeshHandler.h"
 #include "../include/RegistrationHandler.h"
 
-int mainn(int argc, char** argv)
+int mainnnn(int argc, char** argv)
 {
 	cout << "creating first cloud...";
-	 MeshHandler * mh1 = new MeshHandler("er1.pcd");
+	 MeshHandler * mh1 = new MeshHandler("cup1.pcd");
+	 mh1->acquirePCD();
 	 mh1->createCloud();
 	cout << "DONE" << endl;
 	cout << "filtering first cloud...";
-     FilterHandler * filter1 = new FilterHandler(mh1->_cloud, "er1_filtered.pcd");
+     FilterHandler * filter1 = new FilterHandler(mh1->_cloud, "cup1_filtered.pcd");
      mh1->_cloud = filter1->passThroughFilter("z", 0.0, 1, false);
      mh1->_cloud = filter1->voxelGridFilter(0.01f, 0.01f, 0.01f);
 	cout << "DONE" << endl;
 	cout << "creating second cloud...";
-	 MeshHandler * mh2 = new MeshHandler("er2.pcd");
+	 MeshHandler * mh2 = new MeshHandler("cup2.pcd");
+	 mh2->acquirePCD();
 	 mh2->createCloud();
 	cout << "DONE" << endl;
 	cout << "filtering second cloud...";
-     FilterHandler * filter2 = new FilterHandler(mh2->_cloud, "er2_filtered.pcd");
+     FilterHandler * filter2 = new FilterHandler(mh2->_cloud, "cup2_filtered.pcd");
      mh2->_cloud = filter2->passThroughFilter("z", 0.0, 1, false);
      mh2->_cloud = filter2->voxelGridFilter(0.01f, 0.01f, 0.01f);
 	cout << "DONE" << endl;
@@ -39,7 +41,7 @@ int mainn(int argc, char** argv)
 	 r_mh->_cloud_w_normals = normals->mergeCloudWithNormals();
 	cout << "DONE" << endl;
 	cout << "building the mesh...";
-	 PolygonMesh mesh = r_mh->buildMesh("reg.vtk", 0.025, 2.5, 100, M_PI/4, M_PI/18, 2*M_PI/3, false);
+	 PolygonMesh mesh = r_mh->buildMesh("cup-reg.vtk", 0.025, 2.5, 100, M_PI/4, M_PI/18, 2*M_PI/3, false);
 	cout << "DONE" << endl;
 	 r_mh->showMesh(mesh);
 	 return 0;

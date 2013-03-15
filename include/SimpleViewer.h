@@ -45,6 +45,11 @@ class SimpleViewer
 		void cloudView(const PointCloud<PointXYZ>::ConstPtr &cloud);
 
 		/**
+		 * Feeding up the viewer with the updated cloud.
+		 */
+		void cloudViewNoSave(const PointCloud<PointXYZ>::ConstPtr &cloud);
+
+		/**
 		 * The life-cycle of the viewer.
 		 */
 		void run();

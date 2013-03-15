@@ -11,18 +11,23 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/filters/passthrough.h>
+#include <pcl/filters/voxel_grid.h>
 
 using namespace pcl;
 using namespace std;
 
 class FilterHandler
 {
+
+	typedef typename pcl::PointXYZ pointType;
+
 	public:
 
 	// FIELDS:
 
-		PointCloud<PointXYZ>::Ptr _cloud;	// base cloud
+		PointCloud<pointType>::Ptr _cloud;	// base cloud
 		string _output;						// path to save filtered image
+
 
 	// METHODS:
 
@@ -30,7 +35,7 @@ class FilterHandler
 		 * Constructor.
 		 * Gets a point cloud and output path as arguments.
 		 */
-		FilterHandler(PointCloud<PointXYZ>::Ptr cloud, string output);
+		FilterHandler(PointCloud<pointType>::Ptr cloud, string output);
 
 		/**
 		 * Destructor.
@@ -42,8 +47,19 @@ class FilterHandler
 		 * Gets as arguments - output path, field to filter, from limit and to limit.
 		 * Returns a pointer to the filtered cloud.
 		 */
-		PointCloud<PointXYZ>::Ptr passThroughFilter(string fieldName, double fromFilterLimit, double toFilterLimit);
+		PointCloud<pointType>::Ptr passThroughFilter(string fieldName,
+													 double fromFilterLimit,
+													 double toFilterLimit,
+													 bool negativeLimits);
 
+		/**
+		 * Implements the Voxel Grid Filter.
+		 * Gets the leafs size as arguments (floating point).
+		 * Returns a pointer to the filtered cloud.
+		 */
+		PointCloud<pointType>::Ptr voxelGridFilter(float xLeafSize,
+												   float yLeafSize,
+												   float zLeafSize);
 
 		// --> any further filter implementations should go here
 };

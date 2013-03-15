@@ -11,7 +11,7 @@
 	/**
 	 * Empty constructor.
 	 */
-	MeshHandler::MeshHandler() : _filename(0)
+	MeshHandler::MeshHandler()
 	{}
 
 	/**
@@ -25,7 +25,7 @@
 	 * Constructor.
 	 * Gets cloud as argument.
 	 */
-	MeshHandler::MeshHandler(PointCloud<PointXYZ>::Ptr cloud) : _filename(0), _cloud(cloud)
+	MeshHandler::MeshHandler(PointCloud<PointXYZ>::Ptr cloud) : _cloud(cloud)
 	{}
 
 	/**

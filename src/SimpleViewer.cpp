@@ -22,7 +22,7 @@
 	 */
     SimpleViewer::~SimpleViewer()
     {
-    	_viewer.~CloudViewer();
+    	//_viewer.~CloudViewer();
     }
 
 	/**
@@ -33,6 +33,15 @@
 		if ( !_viewer.wasStopped() )
 			_viewer.showCloud(cloud);
 		pcl::io::savePCDFile(_filename, *cloud, true);
+	}
+
+	/**
+	 * Feeding up the viewer with the updated cloud.
+	 */
+	void SimpleViewer::cloudViewNoSave(const PointCloud<PointXYZ>::ConstPtr &cloud)
+	{
+		while ( !_viewer.wasStopped() )
+			_viewer.showCloud(cloud);
 	}
 
 	/**

@@ -6,6 +6,7 @@
 
 #include "../include/FilterHandler.h"
 
+typedef typename pcl::PointXYZ pointType;
 
 // METHODS:
 
@@ -13,7 +14,7 @@
 	 * Constructor.
 	 * Gets a point cloud and output path as arguments.
 	 */
-	FilterHandler::FilterHandler(PointCloud<PointXYZ>::Ptr cloud, string output) : _cloud(cloud), _output(output)
+	FilterHandler::FilterHandler(PointCloud<pointType>::Ptr cloud, string output) : _cloud(cloud), _output(output)
 	{}
 
 	/**
@@ -27,13 +28,37 @@
 	 * Gets as arguments - output path, field to filter, from limit and to limit.
 	 * Creating the output on the disk and returns filtered point cloud.
 	 */
-	PointCloud<PointXYZ>::Ptr FilterHandler::passThroughFilter(string fieldName, double fromFilterLimit, double toFilterLimit)
+	PointCloud<pointType>::Ptr FilterHandler::passThroughFilter(string fieldName,
+												 double fromFilterLimit,
+												 double toFilterLimit,
+												 bool negativeLimits)
 	{
-		PassThrough<PointXYZ> pass;
+		PassThrough<pointType> pass;
 		pass.setInputCloud(_cloud);
 		pass.setFilterFieldName(fieldName);
 		pass.setFilterLimits(fromFilterLimit, toFilterLimit);
+		pass.setFilterLimitsNegative(negativeLimits);
 		pass.filter(*_cloud);
+		io::savePCDFile(_output, *_cloud, true);
+		return _cloud;
+	}
+
+	/**
+	 * Implements the Voxel Grid Filter.
+	 */
+	/**
+	 * Implements the Voxel Grid Filter.
+	 * Gets the leafs size as arguments (floating point).
+	 * Returns a pointer to the filtered cloud.
+	 */
+	PointCloud<pointType>::Ptr FilterHandler::voxelGridFilter(float xLeafSize,
+											   	   	   	      float yLeafSize,
+											   	   	   	      float zLeafSize)
+	{
+		VoxelGrid<pointType> sor;
+		sor.setInputCloud(_cloud);
+		sor.setLeafSize(xLeafSize, yLeafSize, zLeafSize);
+		sor.filter(*_cloud);
 		io::savePCDFile(_output, *_cloud, true);
 		return _cloud;
 	}
