@@ -13,11 +13,16 @@
 #include <pcl/filters/passthrough.h>
 #include <pcl/filters/voxel_grid.h>
 
+#include <pcl/pcl_base.h>
+#include "../include/median_filter.h"
+
 using namespace pcl;
 using namespace std;
 
 class FilterHandler
 {
+
+
 
 	typedef typename pcl::PointXYZ pointType;
 
@@ -60,6 +65,13 @@ class FilterHandler
 		PointCloud<pointType>::Ptr voxelGridFilter(float xLeafSize,
 												   float yLeafSize,
 												   float zLeafSize);
+
+		/**
+		 * Implements the Median Filter.
+		 * Gets the largest value one dexel is allowed to move as argument (floating point), and the window size (integer).
+		 * Returns a pointer to the filtered cloud.
+		 */
+		PointCloud<pointType>::Ptr medianFilter(float maxAllowedMovement, int windowSize);
 
 		// --> any further filter implementations should go here
 };
