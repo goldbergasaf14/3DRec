@@ -8,18 +8,17 @@ int main(int argc, char** argv)
 	cout << "creating cloud...";
 	 MeshHandler * mh = new MeshHandler("cup1.pcd");
 	 mh->createCloud();
-	 	 SimpleViewer * v = new SimpleViewer("cup1.pcd");
-	 	 v->cloudViewNoSave(mh->_cloud);
 	cout << "DONE" << endl;
-	return 1;
 	cout << "filtering cloud...";
-     //FilterHandler * filter = new FilterHandler(mh->_cloud, "cup1_filtered.pcd");
-     //mh->_cloud = filter->passThroughFilter("z", -1, 1, false);
-     //mh->_cloud = filter->passThroughFilter("x", -1, 1, false);
+     FilterHandler * filter = new FilterHandler(mh->_cloud, "cup1_filtered.pcd");
      //mh->_cloud = filter->passThroughFilter("y", -1, 1, false);
      //mh->_cloud = filter->voxelGridFilter(0.01f, 0.01f, 0.01f);
-
+     mh->_cloud = filter->medianFilter(10 ,5);
+     mh->_cloud = filter->passThroughFilter("z", -1, 1, false);
+     mh->_cloud = filter->passThroughFilter("x", -1, 1, false);
+     mh->_cloud = filter->voxelGridFilter(0.01f, 0.01f, 0.01f);
 	cout << "DONE" << endl;
+
 	cout << "calculating normals...";
 	 NormalCalculator * normals = new NormalCalculator(mh->_cloud);
 	 normals->getReady(20);
