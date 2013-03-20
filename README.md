@@ -1,4 +1,7 @@
 3DRec
 =====
 
-3D Reconstruction using Kinect and tablet.
+3D Reconstruction project using Kinect and ACER tablet.
+
+
+Authors: Asaf Goldberg & Erez Bursztyn
