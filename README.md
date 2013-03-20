@@ -1,4 +1,4 @@
 3DRec
 =====
 
-Final project
+3D Reconstruction using Kinect and tablet.
